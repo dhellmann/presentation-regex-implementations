@@ -3,6 +3,7 @@ import sys
 sys.path.append('./code')
 from tools.showcode import showcode, runscript
 from recursive_descent_dot import to_graph as rd_to_graph
+from nfa3dot import to_graph as nfa_to_graph
 import re
 ]]]-->
 <!--[[[end]]]-->
@@ -104,12 +105,22 @@ def match_star(c, regexp, text):
         </section>
 
         <section>
-          <h2>Parse Tree: a*(b|c)</h2>
+          <h2>Parse Tree: a(b|c)*</h2>
 <!--[[[cog
-rd_to_graph('a*(b|c)', 'rd_abc.graphviz')
+rd_to_graph('a(b|c)*', 'diag_rd_abc.graphviz')
 ]]]-->
 <!--[[[end]]]-->
-          <img src="rd_abc.graphviz.svg"/>
+          <img src="diag_rd_abc.graphviz.svg"/>
+
+        </section>
+
+        <section>
+          <h2>NFA: a(b|c)*</h2>
+<!--[[[cog
+nfa_to_graph('a(b|c)*', 'diag_nfa_abc.graphviz')
+]]]-->
+<!--[[[end]]]-->
+          <img src="diag_nfa_abc.graphviz.svg"/>
 
         </section>
 

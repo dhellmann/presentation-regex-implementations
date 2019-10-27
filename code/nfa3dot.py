@@ -3,59 +3,40 @@
 import argparse
 import logging
 
-import nfa3
+import nfa
 
 
-def edge(start, end):
+def edge(f, start, end):
     if end is None:
         return
     attrs = ''
-    if start.token.op == nfa3.LITERAL:
+    if start.token.op == nfa.LITERAL:
         attrs = '[ label = "%s" ]' % start.token.text
-    print('  %s -> %s %s' % (start.n, end.n, attrs))
+    f.write('  %s -> %s %s\n' % (start.n, end.n, attrs))
 
 
-def to_graph(expression, all_states, active):
-    print('digraph "%s" {' % expression)
-    print('  rankdir=LR;')
-    print('  label="%s";' % expression)
-    print()
+def node_to_graph(f, expression, all_states, active):
+    f.write('digraph "%s" {\n' % expression)
+    f.write('  rankdir=LR;\n')
     for state in all_states:
         shape = 'circle'
-        if state.token.op == nfa3.MATCH:
+        if state.token.op == nfa.MATCH:
             shape = 'doublecircle'
         color = 'white'
         if state.n in active:
             color = 'yellow'
-        print('  %s [ shape = %s, style = filled, fillcolor = %s ]' % (
+        f.write('  %s [ shape = %s, style = filled, fillcolor = %s ]\n' % (
             state.n, shape, color))
-    print()
+    f.write('\n')
     for state in all_states:
-        edge(state, state.out1)
-        edge(state, state.out2)
-    print('}')
+        edge(f, state, state.out1)
+        edge(f, state, state.out2)
+    f.write('}\n')
 
 
-def main():
-    argparser = argparse.ArgumentParser()
-    argparser.add_argument('expression')
-    argparser.add_argument('-a', '--active', dest='active',
-                           default=[], action='append')
-    argparser.add_argument('-v', dest='verbose',
-                           default=False, action='store_true')
-    args = argparser.parse_args()
-
-    if args.verbose:
-        logging.basicConfig(
-            format='%(message)s',
-            level=logging.DEBUG,
-        )
-
-    tokens = nfa3.tokenize(args.expression)
-    pf = nfa3.postfix(tokens)
-    start_state, all_states = nfa3.post2nfa(pf)
-    to_graph(args.expression, all_states, args.active)
-
-
-if __name__ == '__main__':
-    main()
+def to_graph(expression, outfile, active=[]):
+    tokens = nfa.tokenize(expression)
+    pf = nfa.postfix(tokens)
+    start_state, all_states = nfa.post2nfa(pf)
+    with open(outfile, 'w') as f:
+        node_to_graph(f, expression, all_states, active)

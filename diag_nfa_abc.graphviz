@@ -1,0 +1,17 @@
+digraph "a(b|c)*" {
+  rankdir=LR;
+  s0 [ shape = circle, style = filled, fillcolor = white ]
+  s1 [ shape = circle, style = filled, fillcolor = white ]
+  s2 [ shape = circle, style = filled, fillcolor = white ]
+  s3 [ shape = circle, style = filled, fillcolor = white ]
+  s4 [ shape = circle, style = filled, fillcolor = white ]
+  s5 [ shape = doublecircle, style = filled, fillcolor = white ]
+
+  s0 -> s4 [ label = "a" ]
+  s1 -> s4 [ label = "b" ]
+  s2 -> s4 [ label = "c" ]
+  s3 -> s1 
+  s3 -> s2 
+  s4 -> s5 
+  s4 -> s3 
+}
