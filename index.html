@@ -1,5 +1,8 @@
 <!--[[[cog
+import sys
+sys.path.append('./code')
 from tools.showcode import showcode, runscript
+from recursive_descent_dot import to_graph as rd_to_graph
 import re
 ]]]-->
 <!--[[[end]]]-->
@@ -97,6 +100,16 @@ def match_star(c, regexp, text):
     return False</code></pre>
 
 <!--[[[end]]]-->
+
+        </section>
+
+        <section>
+          <h2>Parse Tree: a*(b|c)</h2>
+<!--[[[cog
+rd_to_graph('a*(b|c)', 'rd_abc.graphviz')
+]]]-->
+<!--[[[end]]]-->
+          <img src="rd_abc.graphviz.svg"/>
 
         </section>
 

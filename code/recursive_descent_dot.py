@@ -9,51 +9,51 @@ import recursive_descent
 node_counter = itertools.count()
 
 
-def edge(start, end):
+def edge(start, end, write):
     if end is None:
         return
-    print('  %s -> %s' % (start, end))
+    write('  %s -> %s\n' % (start, end))
 
 
 show_node_id = False
 
-def mk_node(node_name, label, active):
+def mk_node(node_name, label, active, write):
     if show_node_id:
         label = '{!r} {}'.format(label, node_name)
     color = 'white'
     if node_name in active:
         color = 'yellow'
-    print('  {} [ label = "{}", shape = circle, style = filled, fillcolor = {} ]'.format(
+    write('  {} [ label = "{}", shape = circle, style = filled, fillcolor = {} ]\n'.format(
         node_name, label, color))
 
 
-def to_graph(node, active):
+def node_to_graph(node, active, write):
     node_name = 'n{}'.format(next(node_counter))
 
     if isinstance(node, recursive_descent.Choice):
-        a_name = to_graph(node.a, active)
-        b_name = to_graph(node.b, active)
-        mk_node(node_name, '|', active)
-        edge(node_name, a_name)
-        edge(node_name, b_name)
+        a_name = node_to_graph(node.a, active, write)
+        b_name = node_to_graph(node.b, active, write)
+        mk_node(node_name, '|', active, write)
+        edge(node_name, a_name, write)
+        edge(node_name, b_name, write)
 
-    elif isinstance(node, recursive_descent.Sequence):
-        name1 = to_graph(node.first, active)
-        name2 = to_graph(node.second, active)
-        mk_node(node_name, '\N{CIRCLED PLUS}', active)
-        edge(node_name, name1)
-        edge(node_name, name2)
+    elif isinstance(node, recursive_descent.Concatenate):
+        name1 = node_to_graph(node.first, active, write)
+        name2 = node_to_graph(node.second, active, write)
+        mk_node(node_name, '\N{CIRCLED PLUS}', active, write)
+        edge(node_name, name1, write)
+        edge(node_name, name2, write)
 
     elif isinstance(node, recursive_descent.Blank):
-        mk_node(node_name, '', active)
+        mk_node(node_name, '', active, write)
 
     elif isinstance(node, recursive_descent.Repetition):
-        internal_name = to_graph(node.internal, active)
-        mk_node(node_name, '*', active)
-        edge(node_name, internal_name)
+        internal_name = node_to_graph(node.internal, active, write)
+        mk_node(node_name, '*', active, write)
+        edge(node_name, internal_name, write)
 
     elif isinstance(node, recursive_descent.Primitive):
-        mk_node(node_name, node.c, active)
+        mk_node(node_name, node.c, active, write)
 
     else:
         raise ValueError('Unknown node type {}'.format(node))
@@ -61,34 +61,10 @@ def to_graph(node, active):
     return node_name
 
 
-def main():
-    global show_node_id
-
-    argparser = argparse.ArgumentParser()
-    argparser.add_argument('expression')
-    argparser.add_argument('-a', '--active', dest='active',
-                           default=[], action='append')
-    argparser.add_argument('-i', '--ids', dest='ids',
-                           default=False, action='store_true')
-    argparser.add_argument('-v', dest='verbose',
-                           default=False, action='store_true')
-    args = argparser.parse_args()
-
-    if args.verbose:
-        logging.basicConfig(
-            format='%(message)s',
-            level=logging.DEBUG,
-        )
-
-    show_node_id = args.ids
-
-    expr = recursive_descent.parse(args.expression)
-    print('digraph "%s" {' % args.expression)
-    print('  label="%s";' % args.expression)
-    print()
-    to_graph(expr, args.active)
-    print('}')
-
-
-if __name__ == '__main__':
-    main()
+def to_graph(expression, outfile, active=[]):
+    expr = recursive_descent.parse(expression)
+    with open(outfile, 'w') as f:
+        print('writing to {}'.format(outfile))
+        f.write('digraph "%s" {\n' % expression)
+        node_to_graph(expr, active, f.write)
+        f.write('}\n')

@@ -1,0 +1,25 @@
+digraph "a*(b|c)" {
+  n2 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n4 [ label = "a", shape = circle, style = filled, fillcolor = white ]
+  n3 [ label = "*", shape = circle, style = filled, fillcolor = white ]
+  n3 -> n4
+  n1 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n1 -> n2
+  n1 -> n3
+  n7 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n8 [ label = "b", shape = circle, style = filled, fillcolor = white ]
+  n6 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n6 -> n7
+  n6 -> n8
+  n10 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n11 [ label = "c", shape = circle, style = filled, fillcolor = white ]
+  n9 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n9 -> n10
+  n9 -> n11
+  n5 [ label = "|", shape = circle, style = filled, fillcolor = white ]
+  n5 -> n6
+  n5 -> n9
+  n0 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n0 -> n1
+  n0 -> n5
+}
