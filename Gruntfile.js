@@ -120,8 +120,7 @@ module.exports = function(grunt) {
                 'images/**',
                 'img/**',
                 'plugin/**',
-                '**.graphviz',
-                '**.svg',
+                'graphs/**',
                 '**.md'
             ]
         },
@@ -150,7 +149,7 @@ module.exports = function(grunt) {
                 files: root.map(path => path + '/*.md')
             },
             graphviz: {
-                files: [ '*.graphviz' ],
+                files: root.map(path => path + 'graphs/*.graphviz'),
                 tasks: 'exec:graphviz',
             },
             options: {
@@ -167,7 +166,7 @@ module.exports = function(grunt) {
         exec: {
             rsync: './bin/rsync.sh',
             cog: 'cog.py -r index.html',
-            graphviz: 'dot -O -Tsvg *.graphviz'
+            graphviz: 'dot -O -Tsvg graphs/*.graphviz'
         }
 
     });
