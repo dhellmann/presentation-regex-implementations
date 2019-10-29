@@ -4,6 +4,7 @@ sys.path.append('./code')
 from tools.showcode import showcode, runscript
 from recursive_descent_dot import to_graph as rd_to_graph
 from nfa3dot import to_graph as nfa_to_graph
+from tools.regexesfear import showregex
 import re
 ]]]-->
 <!--[[[end]]]-->
@@ -48,11 +49,123 @@ import re
       <div class="slides">
 
         <section>
-          <h2>Understanding Regular Expressions</h2>
-          <h3>(by Studying 3 Implementations)</h3>
-          <h4>PyATL</h4>
-          <h5>Doug Hellmann</h5>
+          <h2>Understanding<br/>Regular Expressions</h2>
+          <h3>by Studying 3 Implementations</h3>
+          <h4>Doug Hellmann</h4>
         </section>
+
+
+
+<section>
+  <h2>What are <br/>“<em>Regular Expressions</em>”?</h2>
+
+  <p>Formal Language for<br/>Matching Patterns in Text</p>
+
+  <aside class="notes">
+    <p>The concept of a regular expression, or regular language, comes
+    from the mathematician Stephen Cole Kleene, who also created
+    recursion theory.</p>
+    <p>A regular expression, or regex, describes a <em>pattern</em>
+    that can be parsed and compared against a text string</p>
+  </aside>
+</section>
+
+
+
+<section>
+  <h2>Their Uses</h2>
+
+  <ul>
+    <li>Finding</li>
+    <li>Parsing</li>
+    <li>Editing</li>
+  </ul>
+
+<aside class="notes">
+<ul>
+<li>Finding function definitions in a file or lines in a log file.</li>
+<li>Parsing data files.</li>
+<li>Search and replace using a text editor.</li>
+</ul>
+
+<p>They were introduced in Unix tools by Ken Thompson, and show up in
+a lot of command line programs and editors.</p>
+</aside>
+
+</section>
+
+
+
+<section>
+  <h2>Basic Syntax</h2>
+
+  <ul>
+    <li>Represented as a string</li>
+    <li>Literal characters match themselves</li>
+    <li>Except for meta characters:
+      <ul>
+        <li><tt>*</tt> zero or more repetition</li>
+        <li><tt>+</tt> one or more repetition</li>
+        <li><tt>|</tt> alternative expressions</li>
+        <li><tt>(</tt> and <tt>)</tt> group a sub-expression</li>
+      </ul></li>
+  </ul>
+
+  <aside class="notes">
+    <p>There are lots of good intros to regexes on the internet, and I
+    have some links at the end of this talk. For now, I'll just talk
+    about a few items to ensure we all have at least the basics.</p>
+  </aside>
+</section>
+
+
+
+<section>
+  <h2>An Example</h2>
+
+<!--[[[cog
+showregex("acbbc", "a(b|c)+")
+]]]-->
+<h3 class="code ">a(b|c)+</h3>
+
+<pre data-trim data-noescape style="font-size: 100%">
+<span class="fragment highlight-yellow" data-fragment-index="1">acbbc</span>
+<span class="fragment fade-in" data-fragment-index="1">
+(1, 1) c
+</span>
+</pre>
+<!--[[[end]]]-->
+
+</section>
+
+
+
+<section>
+  <h2>3 Implementations</h2>
+
+  <ol>
+    <li>Brute-force, based on code by Rob Pike</li>
+    <li>Recursive descent, based on work by Matt Might</li>
+    <li>NFA, based on work by Russ Cox</li>
+  </ol>
+
+  <aside class="notes">
+    <ul>
+      <li>Moving from simple brute force to more formal</li>
+      <li>Gaining features with the complexity</li>
+      <li>Solving same problem different ways shows us how basic CS
+      theory about algorithms and data structures can improve our
+      programs</li>
+    </ul>
+  </aside>
+</section>
+
+
+
+<section>
+  <h2>An Elegant Brute-force Implementation</h2>
+</section>
+
 
         <section>
           <h2>Create your other slides here</h2>
@@ -105,6 +218,8 @@ def match_star(c, regexp, text):
 
         </section>
 
+
+
         <section>
           <h2>Parse Tree: a(b|c)*</h2>
 <!--[[[cog
@@ -125,6 +240,8 @@ nfa_to_graph('a(b|c)*', 'graphs/nfa_abc.graphviz')
 
         </section>
 
+
+
         <section>
           <h2>Books</h2>
           <table>
@@ -142,6 +259,8 @@ nfa_to_graph('a(b|c)*', 'graphs/nfa_abc.graphviz')
           </aside>
         </section>
 
+
+
         <section>
           <h2>Articles</h2>
 
@@ -154,6 +273,8 @@ nfa_to_graph('a(b|c)*', 'graphs/nfa_abc.graphviz')
           <p><a href="https://doughellmann.com/presentations/regexes-fear/">Regular Expressions are Nothing to Fear</a><br/><small>by Doug Hellmann</small></p>
 
         </section>
+
+
 
         <section>
           <h2>Resources</h2>
