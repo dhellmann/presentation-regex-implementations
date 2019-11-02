@@ -47,7 +47,7 @@ def showcode(filename, extras='data-trim data-noescape', lines=None, mark=()):
 
 @capture
 def runscript(filename, *args, extras='data-trim data-noescape', fade_in=False, mark=(), selectable=False):
-    print('<pre {}'.format(extras), end='')
+    print('<pre class="lineselect_selectable" {}'.format(extras), end='')
     classes = []
     if fade_in:
         classes += ['fragment', 'fade-in']
