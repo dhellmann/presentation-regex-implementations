@@ -124,14 +124,15 @@ a lot of command line programs and editors.</p>
   <h2>An Example</h2>
 
 <!--[[[cog
-showregex("acbbc", "a(b|c)+")
+showregex("acbbcd", "a((b|c)+)")
 ]]]-->
-<h3 class="code ">a(b|c)+</h3>
+<h3 class="code ">a((b|c)+)</h3>
 
 <pre data-trim data-noescape style="font-size: 100%">
-<span class="fragment highlight-yellow" data-fragment-index="1">acbbc</span>
+<span class="fragment highlight-yellow" data-fragment-index="1">acbbc</span>d
 <span class="fragment fade-in" data-fragment-index="1">
-(1, 1) c
+(1, 1) cbbc
+(1, 2) c
 </span>
 </pre>
 <!--[[[end]]]-->
