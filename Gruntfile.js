@@ -210,5 +210,6 @@ module.exports = function(grunt) {
     // Aliases for the grunt exec commands
     grunt.registerTask('rsync', ['exec:rsync']);
     grunt.registerTask('cog', ['exec:cog']);
+    grunt.registerTask('up', ['exec:cog', 'exec:graphviz']);
 
 };
