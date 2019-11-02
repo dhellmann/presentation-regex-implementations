@@ -199,6 +199,13 @@ showcode('code/pike.py', lines=(8, 16))
 
 <!--[[[end]]]-->
 
+<aside class="notes">
+  <p>match() is the main entry point.</p>
+  <p>It handles anchoring to the start of the text using ^</p>
+  <p>It also handles moving through the text one character at a time if a match fails.</p>
+  <p>On each iteration it calls match_here()</p>
+</aside>
+
 </section>
 
 
@@ -223,6 +230,12 @@ showcode('code/pike.py', lines=(19, 29))
 
 <!--[[[end]]]-->
 
+<aside class="notes">
+  <p>match_here() is the primary matching logic</p>
+  <p>It checks the start of the regex against the start of the text</p>
+  <p>It applies some special cases for * and handles anchoring to the end of the text</p>
+</aside>
+
 </section>
 
 
@@ -245,20 +258,44 @@ showcode('code/pike.py', lines=(32, 40))
 
 <!--[[[end]]]-->
 
+<aside class="notes">
+  <p>match_star() handles repeats</p>
+  <p>If the pattern after repeated character matches we short-cut and return true</p>
+  <p>Otherwise we consume the repeated character and try again</p>
+</aside>
+
 </section>
 
 
+
 <section>
-<h3 class="code">match('ab*c', 'abccd')</h3>
+  <h2>Pike's Implementation</h2>
 
 <!--[[[cog
-runscript('code/pike_ex1.py')
+showcode('code/pike.py', lines=(19, 29), mark=(9, 10))
 ]]]-->
-<pre class="lineselect_selectable" data-trim data-noescape>
+<pre><code class="lineselect_selectable py" data-trim data-noescape>def match_here(regexp, text):
+    print('match_here({!r}, {!r})'.format(regexp, text))
+    if not regexp:
+        return True
+    if len(regexp) > 1 and regexp[1] == '*':
+        return match_star(regexp[0], regexp[2:], text)
+    if len(regexp) == 1 and regexp[0] == '$':
+        return len(text) == 0
+<mark>    if text and regexp and (regexp[0] in ['.', text[0]]):
+</mark><mark>        return match_here(regexp[1:], text[1:])
+</mark>    return False</code></pre>
+
+<!--[[[end]]]-->
+
+<!--[[[cog
+runscript('code/pike_ex1.py', selectable=False, mark=(3, 4))
+]]]-->
+<pre data-trim data-noescape>
 
 match('ab*c', 'abccd')
-match_here('ab*c', 'abccd')
-match_here('b*c', 'bccd')
+<mark>match_here('ab*c', 'abccd')</mark>
+<mark>match_here('b*c', 'bccd')</mark>
 match_star('b', 'c', 'bccd')
 match_here('c', 'bccd')
 match_star('b', 'c', 'ccd')
@@ -268,6 +305,61 @@ match_here('', 'cd')
 </pre>
 
 <!--[[[end]]]-->
+
+<aside class="notes">
+  <p>If we walk through the example expression, we see match_here() consuming the 'a'</p>
+  <p>Then it calls itself, recursing, with the remaining expression and text</p>
+  <p>This time it finds a star and calls match_star()</p>
+</aside>
+
+</section>
+
+
+
+<section>
+  <h2>Pike's Implementation</h2>
+
+<!--[[[cog
+showcode('code/pike.py', lines=(32, 40), mark=(4, 5, 6, 7))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>def match_star(c, regexp, text):
+    while True:
+        print('match_star({!r}, {!r}, {!r})'.format(c, regexp, text))
+<mark>        if match_here(regexp, text):
+</mark><mark>            return True
+</mark><mark>        if c not in ['.', text[0]]:
+</mark><mark>            break
+</mark>        text = text[1:]
+    return False</code></pre>
+
+<!--[[[end]]]-->
+
+<!--[[[cog
+runscript('code/pike_ex1.py', selectable=False, mark=(5, 6, 7, 8))
+]]]-->
+<pre data-trim data-noescape>
+
+match('ab*c', 'abccd')
+match_here('ab*c', 'abccd')
+match_here('b*c', 'bccd')
+<mark>match_star('b', 'c', 'bccd')</mark>
+<mark>match_here('c', 'bccd')</mark>
+<mark>match_star('b', 'c', 'ccd')</mark>
+<mark>match_here('c', 'ccd')</mark>
+match_here('', 'cd')
+
+</pre>
+
+<!--[[[end]]]-->
+
+<aside class="notes">
+  <p>match_star() looks for zero or more 'b' characters followed by
+  the remainder of the regex</p>
+  <p>The 'c' from the rest of the expression fails to match</p>
+  <p>So it consumes the 'b' that does match and tries 'c' again<p>
+  <p>This time the c does match and the expression is completely
+  consumed and a match is declared</p>
+</aside>
 
 </section>
 
