@@ -53,7 +53,7 @@ def showregex(s, p, flags=0, heading='h3', classes='',
             elif m.groups():
                 print('<span class="fragment fade-in" data-fragment-index="1">')
                 for j, g in enumerate(m.groups(), 1):
-                    print('({}, {}) {}'.format(i, j, g))
+                    print('{} {}'.format(j, g))
                 print('</span>')
 
     print('</pre>')
