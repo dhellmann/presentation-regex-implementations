@@ -182,20 +182,12 @@ showregex("acbbcd", "a((b|c)*)")
 
 
 <section>
-  <h2>An Elegant Brute-force Implementation</h2>
-</section>
-
-
-        <section>
-          <h2>Create your other slides here</h2>
+  <h2>Pike's Implementation</h2>
 
 <!--[[[cog
-showcode('code/pike.py')
+showcode('code/pike.py', lines=(8, 16))
 ]]]-->
-<pre><code class="lineselect_selectable py" data-trim data-noescape>#!/usr/bin/env python3
-
-
-def match(regexp, text):
+<pre><code class="lineselect_selectable py" data-trim data-noescape>def match(regexp, text):
     if regexp and regexp[0] == '^':
         return match_here(regexp[1:], text)
     while text:
@@ -203,29 +195,47 @@ def match(regexp, text):
         if match_here(regexp, text):
             return True
         text = text[1:]
-    return False
+    return False</code></pre>
+
+<!--[[[end]]]-->
+
+</section>
 
 
-def match_here(regexp, text):
+
+<section>
+  <h2>Pike's Implementation</h2>
+
+<!--[[[cog
+showcode('code/pike.py', lines=(19, 29))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>def match_here(regexp, text):
     print('match_here({!r}, {!r})'.format(regexp, text))
     if not regexp:
-        print(' end of regexp')
         return True
     if len(regexp) > 1 and regexp[1] == '*':
-        print(' found star')
         return match_star(regexp[0], regexp[2:], text)
     if len(regexp) == 1 and regexp[0] == '$':
-        print(' testing end', len(text))
         return len(text) == 0
-    if text and regexp and (regexp[0] == '.' or regexp[0] == text[0]):
+    if text and regexp and (regexp[0] in ['.', text[0]]):
         return match_here(regexp[1:], text[1:])
-    return False
+    return False</code></pre>
+
+<!--[[[end]]]-->
+
+</section>
 
 
-def match_star(c, regexp, text):
-    print('match_star({!r}, {!r})'.format(c, regexp, text))
+
+<section>
+  <h2>Pike's Implementation</h2>
+
+<!--[[[cog
+showcode('code/pike.py', lines=(32, 40))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>def match_star(c, regexp, text):
     while True:
-        print('  match_star loop')
+        print('match_star({!r}, {!r}, {!r})'.format(c, regexp, text))
         if match_here(regexp, text):
             return True
         if c not in ['.', text[0]]:
@@ -235,7 +245,31 @@ def match_star(c, regexp, text):
 
 <!--[[[end]]]-->
 
-        </section>
+</section>
+
+
+<section>
+<h3 class="code">match('ab*c', 'abccd')</h3>
+
+<!--[[[cog
+runscript('code/pike_ex1.py')
+]]]-->
+<pre class="lineselect_selectable" data-trim data-noescape>
+
+match('ab*c', 'abccd')
+match_here('ab*c', 'abccd')
+match_here('b*c', 'bccd')
+match_star('b', 'c', 'bccd')
+match_here('c', 'bccd')
+match_star('b', 'c', 'ccd')
+match_here('c', 'ccd')
+match_here('', 'cd')
+
+</pre>
+
+<!--[[[end]]]-->
+
+</section>
 
 
 
