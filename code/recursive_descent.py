@@ -141,12 +141,6 @@ class Match:
 
 class Choice(Matchable):
 
-    def __init__(self, a, b, groups):
-        self.a = a
-        self.b = b
-        self.groups = groups
-        logging.debug(self)
-
     def _match(self, text, start, match):
         logging.debug('{}.match({!r}, {})'.format(self, text, start))
         for candidate in [self.a, self.b]:
@@ -155,6 +149,12 @@ class Choice(Matchable):
             if m:
                 return (m, consumed, sub_match)
         return (False, start, match)
+
+    def __init__(self, a, b, groups):
+        self.a = a
+        self.b = b
+        self.groups = groups
+        logging.debug(self)
 
     def __str__(self):
         return 'Choice({}, {}, {})'.format(self.a, self.b, self.groups)
@@ -187,14 +187,14 @@ class Concatenate(Matchable):
 
 class Blank(Matchable):
 
+    def _match(self, text, start, match):
+        logging.debug('{}.match({!r}, {})'.format(self, text, start))
+        return (True, start, match)
+
     def __init__(self, groups):
         self.groups = groups
         logging.debug(self)
         return
-
-    def _match(self, text, start, match):
-        logging.debug('{}.match({!r}, {})'.format(self, text, start))
-        return (True, start, match)
 
     def __str__(self):
         return 'Blank({})'.format(self.groups)
