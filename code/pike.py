@@ -25,7 +25,7 @@ def match_here(regexp, text):
     if len(regexp) == 1 and regexp[0] == '$':
         return len(text) == 0
     if text and regexp and (regexp[0] in ['.', text[0]]):
-        return match_here(regexp[1:], text[1:])
+        return match_here(regexp[1:], text[1:])  # consuming memory
     return False
 
 
@@ -36,5 +36,5 @@ def match_star(c, regexp, text):
             return True
         if c not in ['.', text[0]]:
             break
-        text = text[1:]
+        text = text[1:]  # consuming memory
     return False

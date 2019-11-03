@@ -225,7 +225,7 @@ showcode('code/pike.py', lines=(19, 29))
     if len(regexp) == 1 and regexp[0] == '$':
         return len(text) == 0
     if text and regexp and (regexp[0] in ['.', text[0]]):
-        return match_here(regexp[1:], text[1:])
+        return match_here(regexp[1:], text[1:])  # consuming memory
     return False</code></pre>
 
 <!--[[[end]]]-->
@@ -253,7 +253,7 @@ showcode('code/pike.py', lines=(32, 40))
             return True
         if c not in ['.', text[0]]:
             break
-        text = text[1:]
+        text = text[1:]  # consuming memory
     return False</code></pre>
 
 <!--[[[end]]]-->
@@ -283,7 +283,7 @@ showcode('code/pike.py', lines=(19, 29), mark=(9, 10))
     if len(regexp) == 1 and regexp[0] == '$':
         return len(text) == 0
 <mark>    if text and regexp and (regexp[0] in ['.', text[0]]):
-</mark><mark>        return match_here(regexp[1:], text[1:])
+</mark><mark>        return match_here(regexp[1:], text[1:])  # consuming memory
 </mark>    return False</code></pre>
 
 <!--[[[end]]]-->
@@ -329,7 +329,7 @@ showcode('code/pike.py', lines=(32, 40), mark=(4, 5, 6, 7))
 </mark><mark>            return True
 </mark><mark>        if c not in ['.', text[0]]:
 </mark><mark>            break
-</mark>        text = text[1:]
+</mark>        text = text[1:]  # consuming memory
     return False</code></pre>
 
 <!--[[[end]]]-->
