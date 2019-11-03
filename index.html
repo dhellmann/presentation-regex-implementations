@@ -420,8 +420,7 @@ match_here('', 'cd')
 
 
 <section>
-  <h2>Recursive Descent</h2>
-  <h3>EBNF Grammar</h3>
+  <h2>EBNF Grammar</h2>
 
 <pre class="lineselect_selectable py" data-trim data-noescape>
 
@@ -438,6 +437,7 @@ match_here('', 'cd')
 </pre>
 
   <aside class="notes">
+    <p>EBNF: Extended Backus-Naur Form</p>
     <ul>
       <li>A regular expression is a term; or a regular expression is a
         term, a '|' and another regular expression.</li>
@@ -457,8 +457,7 @@ match_here('', 'cd')
 
 
 <section>
-  <h2>Recursive Descent</h2>
-  <h3>Parsing</h3>
+  <h2>Parsing</h2>
 
 <!--[[[cog
 showcode('code/recursive_descent.py', lines=(44, 55))
@@ -492,8 +491,7 @@ showcode('code/recursive_descent.py', lines=(44, 55))
 
 
 <section>
-  <h2>Recursive Descent</h2>
-  <h3>Parsing</h3>
+  <h2>Parsing</h2>
 
 <!--[[[cog
 showcode('code/recursive_descent.py', lines=(56, 64))
@@ -526,8 +524,7 @@ showcode('code/recursive_descent.py', lines=(56, 64))
 
 
 <section>
-  <h2>Recursive Descent</h2>
-  <h3>Parsing</h3>
+  <h2>Parsing</h2>
 
 <!--[[[cog
 showcode('code/recursive_descent.py', lines=(66, 74))
@@ -556,8 +553,7 @@ showcode('code/recursive_descent.py', lines=(66, 74))
 
 
 <section>
-  <h2>Recursive Descent</h2>
-  <h3>Parsing</h3>
+  <h2>Parsing</h2>
 
 <!--[[[cog
 showcode('code/recursive_descent.py', lines=(76, 87))
@@ -610,7 +606,9 @@ rd_to_graph('a', 'graphs/rd_a.graphviz')
 
 <aside class="notes">
   <p>The diagram on the right represents the parse tree for the
-  expression, showing the objects that were created.</p>
+  expression.</p>
+  <p>Each node in the tree is an object created by the parsing
+  functions we just looked at.</p>
   <p>We follow the rules from regex -> term -> factor -> base</p>
   <p>The Concatenate operation comes from the term rule. Remember the
   Blank?</p>
@@ -798,6 +796,11 @@ nfa_to_graph('a(b|c)*', 'graphs/nfa_abc.graphviz')
               <i class="fa fa-github"></i>&nbsp;dhellmann/presentation-regex-implementations
             </a>
           </small></p>
+
+          <p><small>
+              <a href="https://en.wikipedia.org/wiki/Extended_Backus–Naur_form">EBNF Grammars
+          </a></small></p>
+
           <p>
             <a href="https://twitter.com/doughellmann">
               <i class="fa fa-twitter"></i>&nbsp;@doughellmann
