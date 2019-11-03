@@ -1150,11 +1150,43 @@ for diagram_num, (active, input, comments) in enumerate(active_sets):
 </section>
 <!--[[[end]]]-->
 
+<!-- END GENERATED SLIDES -->
+
+<section>
+  <h2>Tracking Matches</h2>
+<pre><code class="lineselect_selectable py" data-trim data-noescape>class Match:
+
+    def __init__(self):
+        self.text = {0: ''}
+
+    def add(self, substr, start, end, groups):
+        for g in groups:
+            existing = self.text.get(g, '')
+            self.text[g] = existing + substr
+
+    def dupe(self):
+        c = Match()
+        c.text = dict(self.text)
+        return c
+</code></pre>
+
+<aside class="notes">
+  <p>As we move through the expression, we keep track of which groups
+  each element belong to. Then when we match the text, we can use that
+  list of groups to build up substring matches.</p>
+  <p>The dupe() method lets us make a new Match object any time we
+  have a fork in the logic, so it's easy to throw away changes if we
+  have to backtrack.</p>
+</aside>
+</section>
+
+
 
 <section>
   <h2>Recursive Descent Parser with Backtracking Matcher</h2>
 
   <ul>
+    <li>Convert expression to a data structure</li>
     <li>Add complexity, add features
       <ul>
         <li>choice</li>
