@@ -1,4 +1,4 @@
-digraph "a(b|c)*" {
+digraph "a((b|c)*)" {
   rankdir=LR;
   s0 [ shape = circle, style = filled, fillcolor = white ]
   s1 [ shape = circle, style = filled, fillcolor = white ]
