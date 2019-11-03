@@ -1,0 +1,7 @@
+digraph "a" {
+  n1 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n2 [ label = "a", shape = circle, style = filled, fillcolor = white ]
+  n0 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n0 -> n1
+  n0 -> n2
+}

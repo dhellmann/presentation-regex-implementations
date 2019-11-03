@@ -550,12 +550,124 @@ showcode('code/recursive_descent.py', lines=(76, 87))
 
 
         <section>
+          <h2>Recursive Descent</h2>
+          <h3>a</h3>
+
+<!--[[[cog
+rd_to_graph('a', 'graphs/rd_a.graphviz')
+]]]-->
+<!--[[[end]]]-->
+          <img src="graphs/rd_a.graphviz.svg" style="float: right; margin-right: 1em;"/>
+
+<pre class="lineselect_selectable py" data-trim data-noescape>
+
+&lt;regex> ::= &lt;term> '|' &lt;regex>
+            |  &lt;term>
+
+&lt;term> ::= { &lt;factor> }
+
+&lt;factor> ::= &lt;base> { '*' }
+
+&lt;base> ::= &lt;char>
+           |  '(' &lt;regex> ')'
+
+</pre>
+
+        </section>
+
+
+        <section>
+          <h2>Recursive Descent</h2>
+          <h3>b|c</h3>
+<!--[[[cog
+rd_to_graph('b|c', 'graphs/rd_b_or_c.graphviz')
+]]]-->
+<!--[[[end]]]-->
+          <img src="graphs/rd_b_or_c.graphviz.svg" style="float: right; margin-right: 1em;"/>
+
+<pre class="lineselect_selectable py" data-trim data-noescape>
+
+&lt;regex> ::= &lt;term> '|' &lt;regex>
+            |  &lt;term>
+
+&lt;term> ::= { &lt;factor> }
+
+&lt;factor> ::= &lt;base> { '*' }
+
+&lt;base> ::= &lt;char>
+           |  '(' &lt;regex> ')'
+
+</pre>
+
+        </section>
+
+
+        <section>
+          <h2>Recursive Descent</h2>
+          <h3>(b|c)*</h3>
+<!--[[[cog
+rd_to_graph('(b|c)*', 'graphs/rd_b_or_c_star.graphviz')
+]]]-->
+<!--[[[end]]]-->
+          <img src="graphs/rd_b_or_c_star.graphviz.svg" style="float: right; margin-right: 1em;"/>
+
+<pre class="lineselect_selectable py" data-trim data-noescape>
+
+&lt;regex> ::= &lt;term> '|' &lt;regex>
+            |  &lt;term>
+
+&lt;term> ::= { &lt;factor> }
+
+&lt;factor> ::= &lt;base> { '*' }
+
+&lt;base> ::= &lt;char>
+           |  '(' &lt;regex> ')'
+
+
+
+
+
+
+
+
+
+</pre>
+
+        </section>
+
+
+        <section>
           <h2>Parse Tree: a((b|c)*)</h2>
 <!--[[[cog
 rd_to_graph('a((b|c)*)', 'graphs/rd_abc.graphviz')
 ]]]-->
 <!--[[[end]]]-->
-          <img src="graphs/rd_abc.graphviz.svg"/>
+          <img src="graphs/rd_abc.graphviz.svg" style="float: right; margin-right: 1em;"/>
+
+<pre class="lineselect_selectable py" data-trim data-noescape>
+
+&lt;regex> ::= &lt;term> '|' &lt;regex>
+            |  &lt;term>
+
+&lt;term> ::= { &lt;factor> }
+
+&lt;factor> ::= &lt;base> { '*' }
+
+&lt;base> ::= &lt;char>
+           |  '(' &lt;regex> ')'
+
+
+
+
+
+
+
+
+
+
+
+
+</pre>
 
         </section>
 
@@ -566,6 +678,8 @@ nfa_to_graph('a(b|c)*', 'graphs/nfa_abc.graphviz')
 ]]]-->
 <!--[[[end]]]-->
           <img src="graphs/nfa_abc.graphviz.svg"/>
+
+</pre>
 
         </section>
 

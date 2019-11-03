@@ -1,0 +1,15 @@
+digraph "b|c" {
+  n5 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n6 [ label = "b", shape = circle, style = filled, fillcolor = white ]
+  n4 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n4 -> n5
+  n4 -> n6
+  n8 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n9 [ label = "c", shape = circle, style = filled, fillcolor = white ]
+  n7 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n7 -> n8
+  n7 -> n9
+  n3 [ label = "|", shape = circle, style = filled, fillcolor = white ]
+  n3 -> n4
+  n3 -> n7
+}

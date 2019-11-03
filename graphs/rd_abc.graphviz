@@ -1,29 +1,29 @@
 digraph "a((b|c)*)" {
-  n2 [ label = "", shape = circle, style = filled, fillcolor = white ]
-  n3 [ label = "a", shape = circle, style = filled, fillcolor = white ]
-  n1 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
-  n1 -> n2
-  n1 -> n3
-  n5 [ label = "", shape = circle, style = filled, fillcolor = white ]
-  n9 [ label = "", shape = circle, style = filled, fillcolor = white ]
-  n10 [ label = "b", shape = circle, style = filled, fillcolor = white ]
-  n8 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
-  n8 -> n9
-  n8 -> n10
-  n12 [ label = "", shape = circle, style = filled, fillcolor = white ]
-  n13 [ label = "c", shape = circle, style = filled, fillcolor = white ]
-  n11 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
-  n11 -> n12
-  n11 -> n13
-  n7 [ label = "|", shape = circle, style = filled, fillcolor = white ]
-  n7 -> n8
-  n7 -> n11
-  n6 [ label = "*", shape = circle, style = filled, fillcolor = white ]
-  n6 -> n7
-  n4 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
-  n4 -> n5
-  n4 -> n6
-  n0 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
-  n0 -> n1
-  n0 -> n4
+  n22 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n23 [ label = "a", shape = circle, style = filled, fillcolor = white ]
+  n21 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n21 -> n22
+  n21 -> n23
+  n25 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n29 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n30 [ label = "b", shape = circle, style = filled, fillcolor = white ]
+  n28 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n28 -> n29
+  n28 -> n30
+  n32 [ label = "", shape = circle, style = filled, fillcolor = white ]
+  n33 [ label = "c", shape = circle, style = filled, fillcolor = white ]
+  n31 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n31 -> n32
+  n31 -> n33
+  n27 [ label = "|", shape = circle, style = filled, fillcolor = white ]
+  n27 -> n28
+  n27 -> n31
+  n26 [ label = "*", shape = circle, style = filled, fillcolor = white ]
+  n26 -> n27
+  n24 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n24 -> n25
+  n24 -> n26
+  n20 [ label = "⊕", shape = circle, style = filled, fillcolor = white ]
+  n20 -> n21
+  n20 -> n24
 }
