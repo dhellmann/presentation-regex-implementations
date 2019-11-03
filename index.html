@@ -175,7 +175,8 @@ showregex("acbbcd", "a((b|c)*)")
 
   <ol>
     <li>Brute-force, based on code by Rob Pike</li>
-    <li>Recursive descent, based on work by Matt Might</li>
+    <li>Recursive descent parser with backtracking matcher, based on
+    work by Matt Might</li>
     <li>NFA, based on work by Russ Cox</li>
   </ol>
 
@@ -1147,6 +1148,32 @@ for diagram_num, (active, input, comments) in enumerate(active_sets):
 </section>
 <!--[[[end]]]-->
 
+
+<section>
+  <h2>Recursive Descent Parser with Backtracking Matcher</h2>
+
+  <ul>
+    <li>Add complexity, add features
+      <ul>
+        <li>choice</li>
+        <li>groups / sub-expressions</li>
+      </ul>
+    </li>
+    <li>Greedy by default</li>
+    <li>O(2^N) for N = len(input)</li>
+  </ul>
+
+  <aside class="notes">
+    <p>By adding some complexity to this implementation, we were able
+    to add group support, both in matching subexpressions and in
+    tracking the matched text.</p>
+    <p>The repetition handling here is greedy by default, which is
+    more typical of regular expression libraries you will see
+    elsewhere, and is important for that group text tracking.</p>
+    <p>Performance could be pretty bad, based on the backtracking when
+    we have a failure in a choice.</p>
+  </aside>
+</section>
 
 
 <section>
