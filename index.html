@@ -364,6 +364,34 @@ match_here('', 'cd')
 </section>
 
 
+<section>
+  <h2>Pike's Implementation</h2>
+
+  <ul>
+    <li>Straightforward implementation</li>
+    <li>Incomplete based on typical features
+      <ul>
+        <li>Boolean match with no location details</li>
+        <li>Non-greedy</li>
+        <li>No grouping</li>
+      </ul>
+    </li>
+    <li>O(N) for N = len(input)</li>
+    <li>Naive string memory management</li>
+  </ul>
+
+<aside class="notes">
+  <p>Implementation came from a short grep-like program, so only
+  needed to know if there was a match.</p>
+  <p>Non-greedy matching is fine for those purposes, and simpler to
+  implement.</p>
+  <p>Translated from C where the text was advanced through
+  pointers. Used slices, causing more memory use.</p>
+</aside>
+
+</section>
+
+
 
         <section>
           <h2>Parse Tree: a(b|c)*</h2>
