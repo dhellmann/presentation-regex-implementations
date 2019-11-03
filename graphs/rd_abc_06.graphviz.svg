@@ -152,7 +152,7 @@
 <!-- n0 -->
 <g id="node14" class="node">
 <title>n0</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="99" cy="-378" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="99" cy="-378" rx="18" ry="18"/>
 <text text-anchor="middle" x="99" y="-373.8" font-family="Times,serif" font-size="14.00" fill="#000000">⊕</text>
 </g>
 <!-- n0&#45;&gt;n1 -->

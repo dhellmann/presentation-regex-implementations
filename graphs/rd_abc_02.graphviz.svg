@@ -12,7 +12,7 @@
 <!-- n2 -->
 <g id="node1" class="node">
 <title>n2</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="18" cy="-234" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="18" cy="-234" rx="18" ry="18"/>
 </g>
 <!-- n3 -->
 <g id="node2" class="node">
@@ -23,7 +23,7 @@
 <!-- n1 -->
 <g id="node3" class="node">
 <title>n1</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="72" cy="-306" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="72" cy="-306" rx="18" ry="18"/>
 <text text-anchor="middle" x="72" y="-301.8" font-family="Times,serif" font-size="14.00" fill="#000000">⊕</text>
 </g>
 <!-- n1&#45;&gt;n2 -->
@@ -152,7 +152,7 @@
 <!-- n0 -->
 <g id="node14" class="node">
 <title>n0</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="99" cy="-378" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="99" cy="-378" rx="18" ry="18"/>
 <text text-anchor="middle" x="99" y="-373.8" font-family="Times,serif" font-size="14.00" fill="#000000">⊕</text>
 </g>
 <!-- n0&#45;&gt;n1 -->

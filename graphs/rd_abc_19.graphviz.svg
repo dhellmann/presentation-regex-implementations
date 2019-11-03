@@ -80,13 +80,13 @@
 <!-- n13 -->
 <g id="node9" class="node">
 <title>n13</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="261" cy="-18" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="261" cy="-18" rx="18" ry="18"/>
 <text text-anchor="middle" x="261" y="-13.8" font-family="Times,serif" font-size="14.00" fill="#000000">c</text>
 </g>
 <!-- n11 -->
 <g id="node10" class="node">
 <title>n11</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="207" cy="-90" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="207" cy="-90" rx="18" ry="18"/>
 <text text-anchor="middle" x="207" y="-85.8" font-family="Times,serif" font-size="14.00" fill="#000000">⊕</text>
 </g>
 <!-- n11&#45;&gt;n12 -->
@@ -104,7 +104,7 @@
 <!-- n7 -->
 <g id="node11" class="node">
 <title>n7</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="180" cy="-162" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="180" cy="-162" rx="18" ry="18"/>
 <text text-anchor="middle" x="180" y="-157.8" font-family="Times,serif" font-size="14.00" fill="#000000">|</text>
 </g>
 <!-- n7&#45;&gt;n8 -->
@@ -122,7 +122,7 @@
 <!-- n6 -->
 <g id="node12" class="node">
 <title>n6</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="180" cy="-234" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="180" cy="-234" rx="18" ry="18"/>
 <text text-anchor="middle" x="180" y="-229.8" font-family="Times,serif" font-size="14.00" fill="#000000">*</text>
 </g>
 <!-- n6&#45;&gt;n7 -->
@@ -134,7 +134,7 @@
 <!-- n4 -->
 <g id="node13" class="node">
 <title>n4</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="126" cy="-306" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="126" cy="-306" rx="18" ry="18"/>
 <text text-anchor="middle" x="126" y="-301.8" font-family="Times,serif" font-size="14.00" fill="#000000">⊕</text>
 </g>
 <!-- n4&#45;&gt;n5 -->
@@ -152,7 +152,7 @@
 <!-- n0 -->
 <g id="node14" class="node">
 <title>n0</title>
-<ellipse fill="#ffffff" stroke="#000000" cx="99" cy="-378" rx="18" ry="18"/>
+<ellipse fill="#ffff00" stroke="#000000" cx="99" cy="-378" rx="18" ry="18"/>
 <text text-anchor="middle" x="99" y="-373.8" font-family="Times,serif" font-size="14.00" fill="#000000">⊕</text>
 </g>
 <!-- n0&#45;&gt;n1 -->

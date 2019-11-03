@@ -881,6 +881,274 @@ showcode('code/recursive_descent.py', lines=(188, 192))
 </aside>
 
 </section>
+
+<!--[[[cog
+
+# Generate the slides for the steps we take walking through the match
+# based on the parse tree graph.
+
+active_sets = [
+
+  (['n0'], 'acbbcd', 'we start at the root of the tree, and go left first to the concat operation'),
+  (['n0', 'n1'], 'acbbcd', 'until we get to the blank'),
+  (['n0', 'n1', 'n2'], 'acbbcd', 'which matches, but does not consume anything'),
+  (['n0', 'n1'], 'acbbcd', 'then we back up and go right to the "a"'),
+  (['n0', 'n1', 'n3'], 'acbbcd', 'which matches and consumes the first character of the input'),
+
+  (['n0', 'n1'], 'cbbcd', 'so we return up the stack'),
+  (['n0'], 'cbbcd', 'until we get to the root, where we go right'),
+  (['n0', 'n4'], 'cbbcd', 'and then left'),
+  (['n0', 'n4', 'n5'], 'cbbcd', 'again the blank does not consume anything, so we back up and go right to the "*"'),
+
+  (['n0', 'n4', 'n6'], 'cbbcd', 'there is only one path there, so we take it'),
+  (['n0', 'n4', 'n6', 'n7'], 'cbbcd', 'and reach the choice<br/>we start with the left option'),
+  (['n0', 'n4', 'n6', 'n7', 'n8', 'n10'], 'cbbcd', 'which eventually gets us to the "b"<br/>this is our first failure'),
+  (['n0', 'n4', 'n6', 'n7'], 'cbbcd', 'that failure propagates back up the call stack as we return false, and we try the second option'),
+  (['n0', 'n4', 'n6', 'n7', 'n11', 'n13'], 'cbbcd', 'which leads us to the "c", and a match'),
+
+  (['n0', 'n4', 'n6'], 'bbcd', 'returning up the stack brings us back to the loop handling repetition'),
+
+  (['n0', 'n4', 'n6', 'n7', 'n8', 'n10'], 'bbcd', 'this time the "b" matches'),
+  (['n0', 'n4', 'n6', 'n7'], 'bcd', 'we skip the right branch since we already have a match from the left'),
+  (['n0', 'n4', 'n6'], 'bcd', 'and go back to the loop handling the repetition'),
+
+  (['n0', 'n4', 'n6', 'n7', 'n8', 'n10'], 'bcd', 'consuming another "b"'),
+  (['n0', 'n4', 'n6', 'n7', 'n11', 'n13'], 'cd', 'and then a "c"'),
+
+  ([], 'd', 'leaving only a "d" in the input<br/>neither the "b" nor "c" branches match, so we have exhausted the input expression, and completed the match'),
+
+
+]
+for diagram_num, (active, input, comments) in enumerate(active_sets):
+  gv_filename = 'graphs/rd_abc_{:02d}.graphviz'.format(diagram_num)
+  rd_to_graph('a((b|c)*)', gv_filename, active=active)
+
+  cog.out('''
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in '{input}'</h3>
+
+  <img src="{gv_filename}.svg"/>
+
+  <aside class="notes">
+    <p>{comments}</p>
+  </aside>
+</section>
+'''.format(input=input, gv_filename=gv_filename, comments=comments))
+]]]-->
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'acbbcd'</h3>
+
+  <img src="graphs/rd_abc_00.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>we start at the root of the tree, and go left first to the concat operation</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'acbbcd'</h3>
+
+  <img src="graphs/rd_abc_01.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>until we get to the blank</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'acbbcd'</h3>
+
+  <img src="graphs/rd_abc_02.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>which matches, but does not consume anything</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'acbbcd'</h3>
+
+  <img src="graphs/rd_abc_03.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>then we back up and go right to the "a"</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'acbbcd'</h3>
+
+  <img src="graphs/rd_abc_04.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>which matches and consumes the first character of the input</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_05.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>so we return up the stack</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_06.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>until we get to the root, where we go right</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_07.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>and then left</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_08.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>again the blank does not consume anything, so we back up and go right to the "*"</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_09.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>there is only one path there, so we take it</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_10.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>and reach the choice<br/>we start with the left option</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_11.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>which eventually gets us to the "b"<br/>this is our first failure</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_12.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>that failure propagates back up the call stack as we return false, and we try the second option</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cbbcd'</h3>
+
+  <img src="graphs/rd_abc_13.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>which leads us to the "c", and a match</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'bbcd'</h3>
+
+  <img src="graphs/rd_abc_14.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>returning up the stack brings us back to the loop handling repetition</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'bbcd'</h3>
+
+  <img src="graphs/rd_abc_15.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>this time the "b" matches</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'bcd'</h3>
+
+  <img src="graphs/rd_abc_16.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>we skip the right branch since we already have a match from the left</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'bcd'</h3>
+
+  <img src="graphs/rd_abc_17.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>and go back to the loop handling the repetition</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'bcd'</h3>
+
+  <img src="graphs/rd_abc_18.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>consuming another "b"</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'cd'</h3>
+
+  <img src="graphs/rd_abc_19.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>and then a "c"</p>
+  </aside>
+</section>
+
+<section data-transition="fade">
+  <h3>Match 'a((b|c)*)' in 'd'</h3>
+
+  <img src="graphs/rd_abc_20.graphviz.svg"/>
+
+  <aside class="notes">
+    <p>leaving only a "d" in the input<br/>neither the "b" nor "c" branches match, so we have exhausted the input expression, and completed the match</p>
+  </aside>
+</section>
+<!--[[[end]]]-->
+
+
+
 <section>
   <h2>NFA: a(b|c)*</h2>
 <!--[[[cog
