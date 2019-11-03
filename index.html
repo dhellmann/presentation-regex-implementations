@@ -796,27 +796,21 @@ showcode('code/recursive_descent.py', lines=(92, 100))
 <section>
   <h2>Matching: Primitive()</h2>
 
-<!--[[[cog
-showcode('code/recursive_descent.py', lines=(223, 235))
-]]]-->
 <pre><code class="lineselect_selectable py" data-trim data-noescape>class Primitive(Matchable):
 
     def __init__(self, c, groups):
         self.c = c
         self.groups = groups
-        logging.debug(self)
 
     def _match(self, text, start, match):
-        logging.debug('{}.match({!r}, {})'.format(self, text, start))
         if text[start] == self.c:
             match.add(self.c, start, start+1, self.groups)
             return (True, start+1, match)
         return (False, start, match)</code></pre>
 
-<!--[[[end]]]-->
-
 <aside class="notes">
-  <p>Primitive checks a single literal character against the current input by indexing into text at the start point.</p>
+  <p>Primitive checks a single literal character against the current
+  input by indexing into text at the start point.</p>
   <p>If it matches, that match is accumulated and we return True, the
   index of the next character to check, and the match object we were
   given.</p>
@@ -829,24 +823,20 @@ showcode('code/recursive_descent.py', lines=(223, 235))
 <section>
   <h2>Matching: Concatenate()</h2>
 
-<!--[[[cog
-showcode('code/recursive_descent.py', lines=(163, 175))
-]]]-->
 <pre><code class="lineselect_selectable py" data-trim data-noescape>class Concatenate(Matchable):
 
     def _match(self, text, start, match):
-        logging.debug('{}.match({!r}, {})'.format(self, text, start))
         m, consumed, sub_match = self.first._match(
             text, start, match.dupe())
         if not m:
             return (False, start, match)
+
         m, consumed, sub_match2 = self.second._match(
             text, consumed, sub_match)
         if not m:
             return (False, start, match)
-        return (m, consumed, sub_match2)</code></pre>
 
-<!--[[[end]]]-->
+        return (m, consumed, sub_match2)</code></pre>
 
 <aside class="notes">
   <p>Concatenate tests two expressions in order.</p>
@@ -866,21 +856,15 @@ showcode('code/recursive_descent.py', lines=(163, 175))
 <section>
   <h2>Matching: Choice()</h2>
 
-<!--[[[cog
-showcode('code/recursive_descent.py', lines=(142, 151))
-]]]-->
 <pre><code class="lineselect_selectable py" data-trim data-noescape>class Choice(Matchable):
 
     def _match(self, text, start, match):
-        logging.debug('{}.match({!r}, {})'.format(self, text, start))
         for candidate in [self.a, self.b]:
             m, consumed, sub_match = candidate._match(
                 text, start, match.dupe())
             if m:
                 return (m, consumed, sub_match)
         return (False, start, match)</code></pre>
-
-<!--[[[end]]]-->
 
 <aside class="notes">
   <p>Choice on the other hand only needs one of its sub-expressions to
@@ -894,16 +878,10 @@ showcode('code/recursive_descent.py', lines=(142, 151))
 <section>
   <h2>Matching: Blank()</h2>
 
-<!--[[[cog
-showcode('code/recursive_descent.py', lines=(188, 192))
-]]]-->
 <pre><code class="lineselect_selectable py" data-trim data-noescape>class Blank(Matchable):
 
     def _match(self, text, start, match):
-        logging.debug('{}.match({!r}, {})'.format(self, text, start))
         return (True, start, match)</code></pre>
-
-<!--[[[end]]]-->
 
 <aside class="notes">
   <p>A Blank always matches, and does not consume any input or update
