@@ -181,7 +181,11 @@ showregex("acbbcd", "a((b|c)*)")
 
   <aside class="notes">
     <ul>
-      <li>Pike: Adapted from chapter in <i>The Practice of Programming</i></li>
+      <li>Pike: Adapted from chapter in <i>The Practice of
+      Programming</i> by Brian Kernighan and Rob Pike</li>
+      <li>Recursive descent: Adapted from article by Matt Might,
+      Professor of Internal Medicine and Computer Science at
+      Univeristy of Alabama at Birmingham</li>
       <li>Moving from simple brute force to more formal</li>
       <li>Gaining features with the complexity</li>
     </ul>
@@ -400,6 +404,149 @@ match_here('', 'cd')
 
 </section>
 
+
+
+<section>
+  <h2>Recursive Descent</h2>
+
+  <p>A technique for parsing input text based on a formal grammar.</p>
+
+  <aside class="notes">
+    <p>Here we get into concepts involved in compiler construction and
+    language design.</p>
+  </aside>
+</section>
+
+
+
+<section>
+  <h2>Recursive Descent</h2>
+  <h3>EBNF Grammar</h3>
+
+<pre class="lineselect_selectable py" data-trim data-noescape>
+
+&lt;regex> ::= &lt;term> '|' &lt;regex>
+            |  &lt;term>
+
+&lt;term> ::= { &lt;factor> }
+
+&lt;factor> ::= &lt;base> { '*' }
+
+&lt;base> ::= &lt;char>
+           |  '(' &lt;regex> ')'
+
+</pre>
+
+  <aside class="notes">
+    <ul>
+      <li>A regular expression is a term; or a regular expression is a
+        term, a '|' and another regular expression.</li>
+      <li>A term is a possibly empty sequence of factors.</li>
+      <li>A factor is a base followed by a possibly empty sequence of
+      '*'.</li>
+      <li>A base is a character or a parenthesized regular
+      expression.</li>
+    </ul>
+
+    <p>There are tools for turning grammars in syntax like this into
+    code, but we're going to do it by hand in this case because the
+    grammar isn't too complicated.</p>
+  </aside>
+</section>
+
+
+
+<section>
+  <h2>Recursive Descent</h2>
+  <h3>Parsing</h3>
+
+<!--[[[cog
+showcode('code/recursive_descent.py', lines=(44, 55))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>    def regex(groups):
+        # &lt;regex> ::= &lt;term> '|' &lt;regex>
+        #             |  &lt;term>
+        t = term(groups)
+
+        if more() and peek() == '|':
+            eat('|')
+            subexpr = regex(groups)
+            return Choice(t, subexpr, groups)
+
+        return t
+</code></pre>
+
+<!--[[[end]]]-->
+</section>
+
+
+
+<section>
+  <h2>Recursive Descent</h2>
+  <h3>Parsing</h3>
+
+<!--[[[cog
+showcode('code/recursive_descent.py', lines=(56, 64))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>    def term(groups):
+        # &lt;term> ::= { &lt;factor> }
+        f = Blank(groups)
+
+        while more() and peek() != ')' and peek() != '|':
+            nextFactor = factor(groups)
+            f = Concatenate(f, nextFactor, groups)
+
+        return f</code></pre>
+
+<!--[[[end]]]-->
+</section>
+
+
+
+<section>
+  <h2>Recursive Descent</h2>
+  <h3>Parsing</h3>
+
+<!--[[[cog
+showcode('code/recursive_descent.py', lines=(66, 74))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>    def factor(groups):
+        # &lt;factor> ::= &lt;base> { '*' }
+        b = base(groups)
+
+        while more() and peek() == '*':
+            eat('*')
+            b = Repetition(b, groups)
+
+        return b</code></pre>
+
+<!--[[[end]]]-->
+</section>
+
+
+
+<section>
+  <h2>Recursive Descent</h2>
+  <h3>Parsing</h3>
+
+<!--[[[cog
+showcode('code/recursive_descent.py', lines=(76, 87))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>    def base(groups):
+        # &lt;base> ::= &lt;char>
+        #            |  '(' &lt;regex> ')'
+        nonlocal group_number_n
+        p = peek()
+        if p == '(':
+            eat('(')
+            group_number_n += 1
+            r = regex(groups + [group_number_n])
+            eat(')')
+            return r
+        return Primitive(next(), groups)</code></pre>
+
+<!--[[[end]]]-->
+</section>
 
 
         <section>
