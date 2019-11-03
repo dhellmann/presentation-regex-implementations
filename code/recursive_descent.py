@@ -162,12 +162,6 @@ class Choice(Matchable):
 
 class Concatenate(Matchable):
 
-    def __init__(self, first, second, groups):
-        self.first = first
-        self.second = second
-        self.groups = groups
-        logging.debug(self)
-
     def _match(self, text, start, match):
         logging.debug('{}.match({!r}, {})'.format(self, text, start))
         m, consumed, sub_match = self.first._match(
@@ -179,6 +173,12 @@ class Concatenate(Matchable):
         if not m:
             return (False, start, match)
         return (m, consumed, sub_match2)
+
+    def __init__(self, first, second, groups):
+        self.first = first
+        self.second = second
+        self.groups = groups
+        logging.debug(self)
 
     def __str__(self):
         return 'Concatenate({}, {}, {})'.format(

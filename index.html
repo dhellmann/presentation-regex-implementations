@@ -731,8 +731,104 @@ rd_to_graph('a((b|c)*)', 'graphs/rd_abc.graphviz')
 
 
 <section>
-  <h2>Recursive Descent</h2>
-  <h3>Matching</h3>
+  <h2>Matching</h2>
+
+<!--[[[cog
+showcode('code/recursive_descent.py', lines=(92, 100))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>class Matchable:
+
+    def match(self, text):
+        logging.debug('\nMATCH')
+        for start in range(len(text)):
+            m, consumed, match = self._match(text, start, Match())
+            if m:
+                return match
+        return None</code></pre>
+
+<!--[[[end]]]-->
+
+<aside class="notes">
+  <p>I mentioned that there is no regex class. Instead, all of the
+  node types implement the Matchable API.</p>
+  <p>The base class has a match() method, which calls _match().</p>
+  <p>Unlike the previous implementation, for this version we keep
+  track of a separate "start" value in the text where we are trying to
+  match.</p>
+  <p>_match() returns a boolean, the next starting point, and the
+  Match object built by evaluating the expression at that point.</p>
+</aside>
+
+</section>
+
+
+
+<section>
+  <h2>Matching: Primitive()</h2>
+
+<!--[[[cog
+showcode('code/recursive_descent.py', lines=(223, 235))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>class Primitive(Matchable):
+
+    def __init__(self, c, groups):
+        self.c = c
+        self.groups = groups
+        logging.debug(self)
+
+    def _match(self, text, start, match):
+        logging.debug('{}.match({!r}, {})'.format(self, text, start))
+        if text[start] == self.c:
+            match.add(self.c, start, start+1, self.groups)
+            return (True, start+1, match)
+        return (False, start, match)</code></pre>
+
+<!--[[[end]]]-->
+
+<aside class="notes">
+  <p>Primitive checks a single literal character against the current input by indexing into text at the start point.</p>
+  <p>If it matches, that match is accumulated and we return True, the
+  index of the next character to check, and the match object we were
+  given.</p>
+</aside>
+
+</section>
+
+
+
+<section>
+  <h2>Matching: Concatenate()</h2>
+
+<!--[[[cog
+showcode('code/recursive_descent.py', lines=(163, 175))
+]]]-->
+<pre><code class="lineselect_selectable py" data-trim data-noescape>class Concatenate(Matchable):
+
+    def _match(self, text, start, match):
+        logging.debug('{}.match({!r}, {})'.format(self, text, start))
+        m, consumed, sub_match = self.first._match(
+            text, start, match.dupe())
+        if not m:
+            return (False, start, match)
+        m, consumed, sub_match2 = self.second._match(
+            text, consumed, sub_match)
+        if not m:
+            return (False, start, match)
+        return (m, consumed, sub_match2)</code></pre>
+
+<!--[[[end]]]-->
+
+<aside class="notes">
+  <p>Concatenate tests two expressions in order.</p>
+  <p>It needs to keep track of how much of the input was consumed by
+  the first expression, so the second expression can start there.</p>
+  <p>If the first expression does not match, it does not need to test
+  the second expression.</p>
+  <p>If the second expression matches, then we need to return the
+  index of the next input character and the match object built after
+  handling both subexpressions.</p>
+</aside>
+
 </section>
 
 
