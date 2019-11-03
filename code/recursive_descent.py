@@ -147,9 +147,6 @@ class Choice(Matchable):
         self.groups = groups
         logging.debug(self)
 
-    def __str__(self):
-        return 'Choice({}, {}, {})'.format(self.a, self.b, self.groups)
-
     def _match(self, text, start, match):
         logging.debug('{}.match({!r}, {})'.format(self, text, start))
         for candidate in [self.a, self.b]:
@@ -159,6 +156,9 @@ class Choice(Matchable):
                 return (m, consumed, sub_match)
         return (False, start, match)
 
+    def __str__(self):
+        return 'Choice({}, {}, {})'.format(self.a, self.b, self.groups)
+
 
 class Concatenate(Matchable):
 
@@ -167,10 +167,6 @@ class Concatenate(Matchable):
         self.second = second
         self.groups = groups
         logging.debug(self)
-
-    def __str__(self):
-        return 'Concatenate({}, {}, {})'.format(
-            self.first, self.second, self.groups)
 
     def _match(self, text, start, match):
         logging.debug('{}.match({!r}, {})'.format(self, text, start))
@@ -184,6 +180,10 @@ class Concatenate(Matchable):
             return (False, start, match)
         return (m, consumed, sub_match2)
 
+    def __str__(self):
+        return 'Concatenate({}, {}, {})'.format(
+            self.first, self.second, self.groups)
+
 
 class Blank(Matchable):
 
@@ -192,12 +192,12 @@ class Blank(Matchable):
         logging.debug(self)
         return
 
-    def __str__(self):
-        return 'Blank({})'.format(self.groups)
-
     def _match(self, text, start, match):
         logging.debug('{}.match({!r}, {})'.format(self, text, start))
         return (True, start, match)
+
+    def __str__(self):
+        return 'Blank({})'.format(self.groups)
 
 
 class Repetition(Matchable):
@@ -206,9 +206,6 @@ class Repetition(Matchable):
         self.internal = internal
         self.groups = groups
         logging.debug(self)
-
-    def __str__(self):
-        return 'Repetition({}, {})'.format(self.internal, self.groups)
 
     def _match(self, text, start, match):
         logging.debug('{}.match({!r}, {})'.format(self, text, start))
@@ -219,6 +216,9 @@ class Repetition(Matchable):
                 text, consumed, sub_match.dupe())
         return (True, consumed, sub_match)
 
+    def __str__(self):
+        return 'Repetition({}, {})'.format(self.internal, self.groups)
+
 
 class Primitive(Matchable):
 
@@ -227,12 +227,12 @@ class Primitive(Matchable):
         self.groups = groups
         logging.debug(self)
 
-    def __str__(self):
-        return 'Primitive({!r}, {})'.format(self.c, self.groups)
-
     def _match(self, text, start, match):
         logging.debug('{}.match({!r}, {})'.format(self, text, start))
         if text[start] == self.c:
             match.add(self.c, start, start+1, self.groups)
             return (True, start+1, match)
         return (False, start, match)
+
+    def __str__(self):
+        return 'Primitive({!r}, {})'.format(self.c, self.groups)
