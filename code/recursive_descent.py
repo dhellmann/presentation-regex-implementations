@@ -11,7 +11,6 @@
 # <factor> ::= <base> { '*' }
 #
 # <base> ::= <char>
-#            |  '\' <char>
 #            |  '(' <regex> ')'
 
 import logging
@@ -43,6 +42,8 @@ def parse(input):
         p += 1
 
     def regex(groups):
+        # <regex> ::= <term> '|' <regex>
+        #             |  <term>
         t = term(groups)
 
         if more() and peek() == '|':
@@ -53,6 +54,7 @@ def parse(input):
         return t
 
     def term(groups):
+        # <term> ::= { <factor> }
         f = Blank(groups)
 
         while more() and peek() != ')' and peek() != '|':
@@ -62,6 +64,7 @@ def parse(input):
         return f
 
     def factor(groups):
+        # <factor> ::= <base> { '*' }
         b = base(groups)
 
         while more() and peek() == '*':
@@ -71,22 +74,16 @@ def parse(input):
         return b
 
     def base(groups):
+        # <base> ::= <char>
+        #            |  '(' <regex> ')'
         nonlocal group_number_n
-
         p = peek()
-
         if p == '(':
             eat('(')
             group_number_n += 1
             r = regex(groups + [group_number_n])
             eat(')')
             return r
-
-        if p == r'\\':
-            eat(r'\\')
-            esc = next()
-            return Primitive(esc, groups)
-
         return Primitive(next(), groups)
 
     return regex([0])
