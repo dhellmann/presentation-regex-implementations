@@ -734,6 +734,22 @@ rd_to_graph('a((b|c)*)', 'graphs/rd_abc.graphviz')
 
 
 <section>
+  <h2>Backtracking</h2>
+
+  <p>Matching expressions with alternatives (choices, greedy
+  repetition, etc.) mean we may have to "back up" and try another way
+  if we make the wrong choice.</p>
+
+<aside class="notes">
+  <p>We will look at using the call stack as a way to handle
+  backtracking, but it is also possible to manage a stack explicitly
+  to avoid the expense of recursive calls.</p>
+</aside>
+</section>
+
+
+
+<section>
   <h2>Matching</h2>
 
 <!--[[[cog
