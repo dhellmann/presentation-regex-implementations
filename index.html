@@ -408,13 +408,18 @@ match_here('', 'cd')
 
 
 <section>
-  <h2>Recursive Descent</h2>
+  <h2>Recursive Descent Parser</h2>
 
-  <p>A technique for parsing input text<br/>based on a formal grammar.</p>
+  <p>A technique for converting input text<br/>based on a formal
+  grammar<br/>to some other form.</p>
+
+  <p>In our case, a <em>parse tree</em><br/>that represents the
+  expression.</p>
 
   <aside class="notes">
     <p>Here we get into concepts involved in compiler construction and
     language design.</p>
+    <p>Let's look at a grammar...</p>
   </aside>
 </section>
 
@@ -727,6 +732,9 @@ rd_to_graph('a((b|c)*)', 'graphs/rd_abc.graphviz')
 <aside class="notes">
   <p>The full example expression from before combines the parts we've
   already looked at.</p>
+
+  <p>Next let's look at how to use the data structure we built to
+  match the pattern against input text...</p>
 </aside>
 
 </section>
@@ -741,6 +749,9 @@ rd_to_graph('a((b|c)*)', 'graphs/rd_abc.graphviz')
   if we make the wrong choice.</p>
 
 <aside class="notes">
+  <p>To do that, we need to understand the
+  term <em>backtracking</em>.</p>
+
   <p>We will look at using the call stack as a way to handle
   backtracking, but it is also possible to manage a stack explicitly
   to avoid the expense of recursive calls.</p>
