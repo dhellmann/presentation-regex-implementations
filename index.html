@@ -477,6 +477,16 @@ showcode('code/recursive_descent.py', lines=(44, 55))
 </code></pre>
 
 <!--[[[end]]]-->
+
+<aside class="notes">
+  <p>Starting at the top of the grammar with "regex" you'll get a
+  sense for why this approach is called "recursive".</p>
+  <p>We start by looking for a "term". Then if we see a <tt>|</tt> we
+  look for a second expression by calling regex() again.</p>
+  <p>We either return the single term we found, or return the Choice()
+  between the first term and the second subexpression.</p>
+</aside>
+
 </section>
 
 
@@ -499,6 +509,18 @@ showcode('code/recursive_descent.py', lines=(56, 64))
         return f</code></pre>
 
 <!--[[[end]]]-->
+
+<aside class="notes">
+  <p>To parse the term, we look for zero or more factors.</p>
+  <p>The Blank represents an empty string, and always matches without
+  consuming any of the input. It lets us always return something for
+  the term.</p>
+  <p>Then we look for more factors until we get to the end of an
+  expression, indicated by the end of the regex string, a closing
+  paren, or a <tt>|</tt>.</p>
+  <p>The Concatenate() type is implicit in the syntax of the regex,
+  with one pattern followed by another.</p>
+</aside>
 </section>
 
 
@@ -521,6 +543,14 @@ showcode('code/recursive_descent.py', lines=(66, 74))
         return b</code></pre>
 
 <!--[[[end]]]-->
+
+<aside class="notes">
+  <p>The factor rule handles * for repetition.</p>
+  <p>Note that the placement of each part of the expression in the
+  grammar indicates its precedence over other parts. The * will be
+  bound to a base, the most basic part of the regex.</p>
+</aside>
+
 </section>
 
 
@@ -546,6 +576,12 @@ showcode('code/recursive_descent.py', lines=(76, 87))
         return Primitive(next(), groups)</code></pre>
 
 <!--[[[end]]]-->
+
+<aside class="notes">
+  <p>A base is either a single character, or an entire regular
+  expression in parens.</p>
+</aside>
+
 </section>
 
 
@@ -573,6 +609,15 @@ rd_to_graph('a', 'graphs/rd_a.graphviz')
 
 </pre>
 
+<aside class="notes">
+  <p>The diagram on the right represents the parse tree for the
+  expression, showing the objects that were created.</p>
+  <p>We follow the rules from regex -> term -> factor -> base</p>
+  <p>The Concatenate operation comes from the term rule. Remember the
+  Blank?</p>
+  <p>Note there is no "regex" class.</p>
+</aside>
+
         </section>
 
 
@@ -598,6 +643,13 @@ rd_to_graph('b|c', 'graphs/rd_b_or_c.graphviz')
            |  '(' &lt;regex> ')'
 
 </pre>
+
+<aside class="notes">
+  <p>This expression is already considerably more complex.</p>
+  <p>Note that both b and c are represented by concatenate operations
+  with a preceding blank.</p>
+  <p>The Choice operation is the root of the tree.</p>
+</aside>
 
         </section>
 
@@ -632,6 +684,13 @@ rd_to_graph('(b|c)*', 'graphs/rd_b_or_c_star.graphviz')
 
 
 </pre>
+
+<aside class="notes">
+  <p>Adding a group around the previous expression allows us to attach
+  the Kleene star for repeating the entire group.</p>
+  <p>Note that there is no separate node in the tree for the group, it
+  is handled as a sub-expression.<p>
+</aside>
 
         </section>
 
@@ -680,6 +739,11 @@ nfa_to_graph('a(b|c)*', 'graphs/nfa_abc.graphviz')
           <img src="graphs/nfa_abc.graphviz.svg"/>
 
 </pre>
+
+<aside class="notes">
+  <p>The full expression adds a bit more complexity to handle the 'a'
+  prefix and the second group.</p>
+</aside>
 
         </section>
 
