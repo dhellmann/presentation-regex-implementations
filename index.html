@@ -410,7 +410,7 @@ match_here('', 'cd')
 <section>
   <h2>Recursive Descent</h2>
 
-  <p>A technique for parsing input text based on a formal grammar.</p>
+  <p>A technique for parsing input text<br/>based on a formal grammar.</p>
 
   <aside class="notes">
     <p>Here we get into concepts involved in compiler construction and
@@ -421,10 +421,9 @@ match_here('', 'cd')
 
 
 <section>
-  <h2>EBNF Grammar</h2>
+  <h3>Extended Backus-Naur Form Grammar (EBNF)</h3>
 
 <pre class="lineselect_selectable py" data-trim data-noescape>
-
 &lt;regex> ::= &lt;term> '|' &lt;regex>
             |  &lt;term>
 
@@ -434,15 +433,13 @@ match_here('', 'cd')
 
 &lt;base> ::= &lt;char>
            |  '(' &lt;regex> ')'
-
 </pre>
 
   <aside class="notes">
-    <p>EBNF: Extended Backus-Naur Form</p>
     <ul>
-      <li>A regular expression is a term; or a regular expression is a
-        term, a '|' and another regular expression.</li>
-      <li>A term is a possibly empty sequence of factors.</li>
+      <li>A regex is a term; or it is a term, a '|' and another
+        regex.</li>
+      <li>A term is a (possibly empty) sequence of factors.</li>
       <li>A factor is a base followed by a possibly empty sequence of
       '*'.</li>
       <li>A base is a character or a parenthesized regular
