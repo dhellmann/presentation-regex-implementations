@@ -1209,8 +1209,9 @@ for diagram_num, (active, input, comments) in enumerate(active_sets):
     <p>The repetition handling here is greedy by default, which is
     more typical of regular expression libraries you will see
     elsewhere, and is important for that group text tracking.</p>
-    <p>Performance could be pretty bad, based on the backtracking when
-    we have a failure in a choice.</p>
+    <p>Performance could be pretty bad for pathological expressions,
+    based on the backtracking when we have a failure in a choice and
+    how much backtracking has to be done.</p>
   </aside>
 </section>
 
