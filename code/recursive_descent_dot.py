@@ -62,6 +62,9 @@ def node_to_graph(node, active, write):
 
 
 def to_graph(expression, outfile, active=[]):
+    global node_counter
+    node_counter = itertools.count()
+
     expr = recursive_descent.parse(expression)
     with open(outfile, 'w') as f:
         print('writing to {}'.format(outfile))
